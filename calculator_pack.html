@@ -2,144 +2,152 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Ultimate Finance Calculator Pack: Compound Interest, Mortgage, Savings Goal & Retirement</title>
-<meta name="description" content="Free Ultimate Finance Calculator Pack: calculate compound interest, mortgage payments, savings goals, and retirement withdrawals. Plan your finances online.">
-<meta name="keywords" content="compound interest calculator, mortgage calculator, savings goal calculator, retirement calculator, financial calculator, online finance tools">
+<title>Ultimate Finance Calculator Pack + Snake Game</title>
+<meta name="description" content="Free Ultimate Finance Calculator Pack with a fun Snake game. Calculate finances and play a classic game online.">
+<meta name="keywords" content="finance calculator, compound interest, mortgage, savings goal, retirement, snake game, online game">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <style>
 body {
     font-family: Arial, sans-serif;
-    max-width: 600px;
-    margin: 40px auto;
-    padding: 20px;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
-h1 {
-    text-align: center;
-}
-h2 {
-    margin-top: 40px;
-    color: #2c3e50;
-}
-p {
-    margin-top: 5px;
-    line-height: 1.4;
-    color: #555;
-}
-label {
-    display: block;
-    margin-top: 10px;
-}
-input {
+
+/* Navigation */
+.navbar {
+    position: fixed;
+    top: 0;
     width: 100%;
-    padding: 8px;
-    margin-top: 4px;
-    box-sizing: border-box;
-}
-button {
-    margin-top: 15px;
-    padding: 10px;
-    width: 100%;
-    font-size: 16px;
-    background-color: #3498db;
+    background: #2c3e50;
     color: white;
-    border: none;
-    cursor: pointer;
+    display: flex;
+    justify-content: space-around;
+    padding: 10px 0;
+    z-index: 1000;
+    flex-wrap: wrap;
+}
+.navbar a {
+    color: white;
+    text-decoration: none;
+    padding: 5px 10px;
+}
+.navbar a:hover {
+    background-color: #3498db;
     border-radius: 4px;
 }
-button:hover {
-    background-color: #2980b9;
+
+/* Main Content */
+.container {
+    display: flex;
+    flex-direction: row;
+    margin-top: 80px;
+    max-width: 1200px;
+    gap: 20px;
+    flex-wrap: wrap;
 }
-.result {
-    margin-top: 20px;
-    font-weight: bold;
-    background: #f1f1f1;
-    padding: 10px;
-    border-radius: 5px;
+.calculators {
+    flex: 1;
+    min-width: 500px;
 }
+h1 { text-align: center; margin-top: 0; }
+h2 { margin-top: 30px; color: #2c3e50; }
+p { color: #555; }
+label { display: block; margin-top: 10px; }
+input { width: 100%; padding: 8px; margin-top: 4px; box-sizing: border-box; }
+button { margin-top: 15px; padding: 10px; width: 100%; font-size: 16px; background-color: #3498db; color: white; border: none; cursor: pointer; border-radius: 4px; }
+button:hover { background-color: #2980b9; }
+.result { margin-top: 20px; font-weight: bold; background: #f1f1f1; padding: 10px; border-radius: 5px; }
+
+/* Snake Game */
+.snake-container {
+    width: 400px;
+    height: 400px;
+    background-color: #000;
+    position: relative;
+    border: 2px solid #2c3e50;
+    flex-shrink: 0;
+}
+.snake-canvas { width: 100%; height: 100%; background-color: #000; display: block; }
 </style>
 </head>
 <body>
 
-<h1>Ultimate Finance Calculator Pack</h1>
-<p>Welcome! This pack includes four essential financial calculators: calculate compound interest growth, mortgage payments, savings goals, and retirement withdrawals. Perfect for personal finance planning, budgeting, and investment calculations.</p>
+<!-- Navigation -->
+<div class="navbar">
+    <a href="#compound">Compound Interest</a>
+    <a href="#mortgage">Mortgage</a>
+    <a href="#savings">Savings Goal</a>
+    <a href="#retirement">Retirement</a>
+</div>
 
+<h1>Ultimate Finance Calculator Pack + Snake Game</h1>
+<p>Calculate finances and have some fun with the classic Snake game!</p>
+
+<div class="container">
+<div class="calculators">
 <!-- 1. Compound Interest -->
+<section id="compound">
 <h2>1. Compound Interest Calculator</h2>
 <p>See how your investments grow over time with monthly contributions and compounding interest.</p>
-<label>Initial Investment (€)
-<input type="number" id="ci_initial" value="10000">
-</label>
-<label>Monthly Contribution (€)
-<input type="number" id="ci_monthly" value="500">
-</label>
-<label>Annual Return (%)
-<input type="number" id="ci_rate" value="7">
-</label>
-<label>Years
-<input type="number" id="ci_years" value="30">
-</label>
+<label>Initial Investment (€)<input type="number" id="ci_initial" value="10000"></label>
+<label>Monthly Contribution (€)<input type="number" id="ci_monthly" value="500"></label>
+<label>Annual Return (%)<input type="number" id="ci_rate" value="7"></label>
+<label>Years<input type="number" id="ci_years" value="30"></label>
 <button onclick="calculateCompound()">Calculate</button>
 <div class="result" id="ci_output"></div>
+</section>
 
 <!-- 2. Mortgage Loan -->
+<section id="mortgage">
 <h2>2. Mortgage Loan Payment Calculator</h2>
 <p>Calculate monthly mortgage payments, total paid, and interest.</p>
-<label>Loan Amount (€)
-<input type="number" id="mortgage_amount" value="200000">
-</label>
+<label>Loan Amount (€)<input type="number" id="mortgage_amount" value="200000"></label>
 <label>Annual Interest Rate (%)
-<input type="number" id="mortgage_rate" value="4">
-</label>
-<label>Loan Term (Years)
-<input type="number" id="mortgage_years" value="30">
-</label>
+<input type="number" id="mortgage_rate" value="4"></label>
+<label>Loan Term (Years)<input type="number" id="mortgage_years" value="30"></label>
 <button onclick="calculateMortgage()">Calculate</button>
 <div class="result" id="mortgage_output"></div>
+</section>
 
 <!-- 3. Savings Goal -->
+<section id="savings">
 <h2>3. Savings Goal Calculator</h2>
 <p>Find out how much you need to save each month to reach your financial goal.</p>
-<label>Target Amount (€)
-<input type="number" id="goal_amount" value="50000">
-</label>
-<label>Current Savings (€)
-<input type="number" id="goal_current" value="5000">
-</label>
-<label>Annual Interest Rate (%)
-<input type="number" id="goal_rate" value="5">
-</label>
-<label>Years to Save
-<input type="number" id="goal_years" value="10">
-</label>
+<label>Target Amount (€)<input type="number" id="goal_amount" value="50000"></label>
+<label>Current Savings (€)<input type="number" id="goal_current" value="5000"></label>
+<label>Annual Interest Rate (%)<input type="number" id="goal_rate" value="5"></label>
+<label>Years to Save<input type="number" id="goal_years" value="10"></label>
 <button onclick="calculateGoal()">Calculate</button>
 <div class="result" id="goal_output"></div>
+</section>
 
 <!-- 4. Retirement Withdrawals -->
+<section id="retirement">
 <h2>4. Retirement Withdrawals Calculator</h2>
 <p>Calculate when you can retire and withdraw a desired monthly amount without reducing your savings.</p>
-<label>Current Savings (€)
-<input type="number" id="ret_current" value="100000">
-</label>
-<label>Monthly Contribution (€)
-<input type="number" id="ret_monthly" value="1000">
-</label>
-<label>Annual Return Rate (%) 
-<input type="number" id="ret_rate" value="7">
-</label>
-<label>Years to Save
-<input type="number" id="ret_years" value="30">
-</label>
-<label>Desired Monthly Withdrawal (€)
-<input type="number" id="ret_desired" value="2000">
-</label>
+<label>Current Savings (€)<input type="number" id="ret_current" value="100000"></label>
+<label>Monthly Contribution (€)<input type="number" id="ret_monthly" value="1000"></label>
+<label>Annual Return Rate (%) <input type="number" id="ret_rate" value="7"></label>
+<label>Years to Save<input type="number" id="ret_years" value="30"></label>
+<label>Desired Monthly Withdrawal (€)<input type="number" id="ret_desired" value="2000"></label>
 <label>Tax Rate on Withdrawals (%)
-<input type="number" id="ret_tax" value="25">
-</label>
+<input type="number" id="ret_tax" value="25"></label>
 <button onclick="calculateRetirement()">Calculate</button>
 <div class="result" id="ret_output"></div>
+</section>
+</div>
+
+<!-- Snake Game -->
+<div class="snake-container">
+<canvas id="snake" class="snake-canvas"></canvas>
+</div>
+</div>
 
 <script>
-// ----------- COMPOUND INTEREST -----------
+// ---------- FINANCE CALCULATORS ----------
 function calculateCompound() {
     let initial = Number(document.getElementById("ci_initial").value);
     let monthly = Number(document.getElementById("ci_monthly").value);
@@ -147,86 +155,129 @@ function calculateCompound() {
     let years = Number(document.getElementById("ci_years").value);
     let months = years * 12;
     let total = initial;
-
-    for (let i = 0; i < months; i++) {
-        total = total * (1 + rate) + monthly;
-    }
-
-    let contributions = initial + (monthly * months);
+    for (let i = 0; i < months; i++) total = total*(1+rate)+monthly;
+    let contributions = initial + monthly*months;
     let gain = total - contributions;
-
-    document.getElementById("ci_output").innerHTML =
-        "Final Value: €" + total.toFixed(0) + "<br>" +
-        "Total Contributions: €" + contributions.toFixed(0) + "<br>" +
-        "Total Gain: €" + gain.toFixed(0);
+    document.getElementById("ci_output").innerHTML = "Final Value: €"+total.toFixed(0)+"<br>Total Contributions: €"+contributions.toFixed(0)+"<br>Total Gain: €"+gain.toFixed(0);
 }
 
-// ----------- MORTGAGE -----------
 function calculateMortgage() {
     let principal = Number(document.getElementById("mortgage_amount").value);
-    let annualRate = Number(document.getElementById("mortgage_rate").value) / 100;
+    let annualRate = Number(document.getElementById("mortgage_rate").value)/100;
     let years = Number(document.getElementById("mortgage_years").value);
-
-    let monthlyRate = annualRate / 12;
-    let months = years * 12;
-    let payment = principal * monthlyRate / (1 - Math.pow(1 + monthlyRate, -months));
-
-    document.getElementById("mortgage_output").innerHTML =
-        "Monthly Payment: €" + payment.toFixed(2) + "<br>" +
-        "Total Paid: €" + (payment * months).toFixed(2) + "<br>" +
-        "Total Interest: €" + ((payment * months) - principal).toFixed(2);
+    let monthlyRate = annualRate/12;
+    let months = years*12;
+    let payment = principal*monthlyRate/(1-Math.pow(1+monthlyRate,-months));
+    document.getElementById("mortgage_output").innerHTML = "Monthly Payment: €"+payment.toFixed(2)+"<br>Total Paid: €"+(payment*months).toFixed(2)+"<br>Total Interest: €"+((payment*months)-principal).toFixed(2);
 }
 
-// ----------- SAVINGS GOAL -----------
 function calculateGoal() {
     let target = Number(document.getElementById("goal_amount").value);
     let current = Number(document.getElementById("goal_current").value);
-    let annualRate = Number(document.getElementById("goal_rate").value) / 100;
+    let annualRate = Number(document.getElementById("goal_rate").value)/100;
     let years = Number(document.getElementById("goal_years").value);
-
-    let months = years * 12;
-    let monthlyRate = annualRate / 12;
-
-    let requiredMonthly = (target - current * Math.pow(1 + monthlyRate, months)) *
-        (monthlyRate / (Math.pow(1 + monthlyRate, months) - 1));
-
-    document.getElementById("goal_output").innerHTML =
-        "Required Monthly Savings: €" + requiredMonthly.toFixed(0);
+    let months = years*12;
+    let monthlyRate = annualRate/12;
+    let requiredMonthly = (target - current*Math.pow(1+monthlyRate,months))*(monthlyRate/(Math.pow(1+monthlyRate,months)-1));
+    document.getElementById("goal_output").innerHTML="Required Monthly Savings: €"+requiredMonthly.toFixed(0);
 }
 
-// ----------- RETIREMENT -----------
 function calculateRetirement() {
     let current = Number(document.getElementById("ret_current").value);
     let monthly = Number(document.getElementById("ret_monthly").value);
-    let annualRate = Number(document.getElementById("ret_rate").value) / 100;
+    let annualRate = Number(document.getElementById("ret_rate").value)/100;
     let years = Number(document.getElementById("ret_years").value);
     let desired = Number(document.getElementById("ret_desired").value);
-    let tax = Number(document.getElementById("ret_tax").value) / 100;
-
-    let months = years * 12;
-    let monthlyRate = annualRate / 12;
-
+    let tax = Number(document.getElementById("ret_tax").value)/100;
+    let months = years*12;
+    let monthlyRate = annualRate/12;
     let fv = current;
-    for (let i = 0; i < months; i++) {
-        fv = fv * (1 + monthlyRate) + monthly;
-    }
-
-    let annualReturn = fv * annualRate;
-    let afterTaxReturn = annualReturn * (1 - tax);
-    let monthlyAvailable = afterTaxReturn / 12;
-
-    let message = "Future Savings at Retirement: €" + fv.toFixed(0) + "<br>" +
-                  "Monthly Withdrawable (after tax): €" + monthlyAvailable.toFixed(0) + "<br>";
-
-    if(monthlyAvailable >= desired){
-        message += "✅ You can retire and withdraw your desired amount.";
-    } else {
-        message += "⚠ You will not be able to withdraw the desired amount. Consider saving more or waiting longer.";
-    }
-
-    document.getElementById("ret_output").innerHTML = message;
+    for(let i=0;i<months;i++) fv=fv*(1+monthlyRate)+monthly;
+    let annualReturn=fv*annualRate;
+    let afterTaxReturn=annualReturn*(1-tax);
+    let monthlyAvailable=afterTaxReturn/12;
+    let message="Future Savings at Retirement: €"+fv.toFixed(0)+"<br>Monthly Withdrawable (after tax): €"+monthlyAvailable.toFixed(0)+"<br>";
+    if(monthlyAvailable>=desired) message+="✅ You can retire and withdraw your desired amount.";
+    else message+="⚠ You will not be able to withdraw the desired amount. Consider saving more or waiting longer.";
+    document.getElementById("ret_output").innerHTML=message;
 }
-</script>
 
+// ---------- SNAKE GAME ----------
+const canvas = document.getElementById("snake");
+const ctx = canvas.getContext("2d");
+const scale = 20;
+const rows = canvas.height/scale;
+const cols = canvas.width/scale;
+let snake;
+let fruit;
+let direction;
+let gameInterval;
+let active = false;
+
+class Snake{
+    constructor(){
+        this.body=[{x:10,y:10}];
+        this.xSpeed=scale;
+        this.ySpeed=0;
+    }
+    draw(){
+        ctx.fillStyle="lime";
+        this.body.forEach(part=>ctx.fillRect(part.x,part.y,scale,scale));
+    }
+    update(){
+        let head={x:this.body[0].x+this.xSpeed, y:this.body[0].y+this.ySpeed};
+        this.body.unshift(head);
+        if(head.x===fruit.x && head.y===fruit.y){
+            fruit.pickLocation();
+        } else this.body.pop();
+        // Wall collision
+        if(head.x<0 || head.x>=canvas.width || head.y<0 || head.y>=canvas.height) resetGame();
+        // Self collision
+        for(let i=1;i<this.body.length;i++){
+            if(head.x===this.body[i].x && head.y===this.body[i].y) resetGame();
+        }
+    }
+    changeDirection(dir){
+        switch(dir){
+            case "ArrowUp": if(this.ySpeed===0){this.xSpeed=0; this.ySpeed=-scale;} break;
+            case "ArrowDown": if(this.ySpeed===0){this.xSpeed=0; this.ySpeed=scale;} break;
+            case "ArrowLeft": if(this.xSpeed===0){this.xSpeed=-scale; this.ySpeed=0;} break;
+            case "ArrowRight": if(this.xSpeed===0){this.xSpeed=scale; this.ySpeed=0;} break;
+        }
+    }
+}
+
+class Fruit{
+    constructor(){ this.pickLocation(); }
+    pickLocation(){
+        this.x=Math.floor(Math.random()*cols)*scale;
+        this.y=Math.floor(Math.random()*rows)*scale;
+    }
+    draw(){
+        ctx.fillStyle="red";
+        ctx.fillRect(this.x,this.y,scale,scale);
+    }
+}
+
+function resetGame(){
+    snake = new Snake();
+    fruit = new Fruit();
+    direction = "";
+}
+
+function gameLoop(){
+    if(!active) return;
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    fruit.draw();
+    snake.update();
+    snake.draw();
+}
+
+canvas.addEventListener("click",(e)=>{ active=true; if(!snake) resetGame(); if(!gameInterval) gameInterval=setInterval(gameLoop,150); });
+document.addEventListener("keydown",(e)=>{ if(active) snake.changeDirection(e.key); });
+document.addEventListener("click",(e)=>{
+    if(!canvas.contains(e.target)) active=false;
+});
+</script>
 </body>
 </html>
