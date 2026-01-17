@@ -6,11 +6,6 @@
 <meta name="description" content="Use our free Simple Calculator Pack to calculate compound interest, mortgage payments, and savings goals. Plan your finances easily online.">
 <meta name="keywords" content="compound interest calculator, mortgage calculator, savings goal calculator, financial calculator, online calculator, personal finance tools">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<!-- Google AdSense -->
-<script data-ad-client="ca-pub-XXXXXXXXXXXXXXXX" async
-        src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-
 <style>
 body {
     font-family: Arial, sans-serif;
@@ -61,45 +56,16 @@ button:hover {
     padding: 10px;
     border-radius: 5px;
 }
-.ad-container {
-    text-align: center;
-    margin-bottom: 20px;
-}
-.sticky-bottom-ad {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    background: #fff;
-    text-align: center;
-    padding: 5px 0;
-    box-shadow: 0 -2px 5px rgba(0,0,0,0.1);
-    z-index: 1000;
-}
 </style>
 </head>
 <body>
 
 <h1>Simple Calculator Pack</h1>
-
-<!-- Top Banner Ad -->
-<div class="ad-container">
-    <ins class="adsbygoogle"
-         style="display:block"
-         data-ad-format="auto"
-         data-full-width-responsive="true"
-         data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
-         data-ad-slot="1234567890"></ins>
-    <script>
-         (adsbygoogle = window.adsbygoogle || []).push({});
-    </script>
-</div>
-
 <p>Welcome! This free calculator pack includes three essential financial tools: calculate your compound interest growth, determine mortgage payments, and plan your savings goals. Perfect for personal finance planning, budgeting, and investment calculations.</p>
 
 <!-- Compound Interest Calculator -->
 <h2>1. Compound Interest Calculator</h2>
-<p>Use this calculator to see how your investments grow over time with monthly contributions and compounding interest. Ideal for retirement planning or wealth growth estimates.</p>
+<p>See how your investments grow over time with monthly contributions and compounding interest.</p>
 <label>Initial Investment (€)
 <input type="number" id="ci_initial" value="10000">
 </label>
@@ -112,12 +78,12 @@ button:hover {
 <label>Years
 <input type="number" id="ci_years" value="30">
 </label>
-<button onclick="calculateCompound()">Calculate Compound Interest</button>
+<button onclick="calculateCompound()">Calculate</button>
 <div class="result" id="ci_output"></div>
 
 <!-- Mortgage Loan Calculator -->
 <h2>2. Mortgage Loan Payment Calculator</h2>
-<p>Calculate your monthly mortgage payments easily. Enter your loan amount, interest rate, and term to see your monthly payment, total paid, and interest over the life of the loan.</p>
+<p>Calculate monthly mortgage payments, total paid, and interest.</p>
 <label>Loan Amount (€)
 <input type="number" id="mortgage_amount" value="200000">
 </label>
@@ -127,12 +93,12 @@ button:hover {
 <label>Loan Term (Years)
 <input type="number" id="mortgage_years" value="30">
 </label>
-<button onclick="calculateMortgage()">Calculate Monthly Payment</button>
+<button onclick="calculateMortgage()">Calculate</button>
 <div class="result" id="mortgage_output"></div>
 
 <!-- Savings Goal Calculator -->
 <h2>3. Savings Goal Calculator</h2>
-<p>Planning for a future goal? Enter your target amount, current savings, expected annual return, and years to save to find out how much you need to save each month to reach your goal.</p>
+<p>Find out how much you need to save each month to reach your financial goal.</p>
 <label>Target Amount (€)
 <input type="number" id="goal_amount" value="50000">
 </label>
@@ -145,21 +111,8 @@ button:hover {
 <label>Years to Save
 <input type="number" id="goal_years" value="10">
 </label>
-<button onclick="calculateGoal()">Calculate Required Monthly Savings</button>
+<button onclick="calculateGoal()">Calculate</button>
 <div class="result" id="goal_output"></div>
-
-<!-- Bottom Sticky Ad -->
-<div class="sticky-bottom-ad">
-    <ins class="adsbygoogle"
-         style="display:block"
-         data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
-         data-ad-slot="0987654321"
-         data-ad-format="auto"
-         data-full-width-responsive="true"></ins>
-    <script>
-         (adsbygoogle = window.adsbygoogle || []).push({});
-    </script>
-</div>
 
 <script>
 // ---------------- COMPOUND INTEREST ----------------
@@ -188,4 +141,35 @@ function calculateCompound() {
 function calculateMortgage() {
     let principal = Number(document.getElementById("mortgage_amount").value);
     let annualRate = Number(document.getElementById("mortgage_rate").value) / 100;
-    let years = Numbe
+    let years = Number(document.getElementById("mortgage_years").value);
+
+    let monthlyRate = annualRate / 12;
+    let months = years * 12;
+    let payment = principal * monthlyRate / (1 - Math.pow(1 + monthlyRate, -months));
+
+    document.getElementById("mortgage_output").innerHTML =
+        "Monthly Payment: €" + payment.toFixed(2) + "<br>" +
+        "Total Paid: €" + (payment * months).toFixed(2) + "<br>" +
+        "Total Interest: €" + ((payment * months) - principal).toFixed(2);
+}
+
+// ---------------- SAVINGS GOAL ----------------
+function calculateGoal() {
+    let target = Number(document.getElementById("goal_amount").value);
+    let current = Number(document.getElementById("goal_current").value);
+    let annualRate = Number(document.getElementById("goal_rate").value) / 100;
+    let years = Number(document.getElementById("goal_years").value);
+
+    let months = years * 12;
+    let monthlyRate = annualRate / 12;
+
+    let requiredMonthly = (target - current * Math.pow(1 + monthlyRate, months)) *
+        (monthlyRate / (Math.pow(1 + monthlyRate, months) - 1));
+
+    document.getElementById("goal_output").innerHTML =
+        "Required Monthly Savings: €" + requiredMonthly.toFixed(0);
+}
+</script>
+
+</body>
+</html>
