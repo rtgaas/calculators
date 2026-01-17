@@ -2,76 +2,22 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Finance Calculators & Games</title>
+<title>Finance Tools & Games</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="Free finance calculators, Snake game, Tetris, and stock market open countdowns.">
 <style>
-body{
-    margin:0;
-    font-family:Arial, sans-serif;
-    background:#f4f4f4;
-}
-.container{
-    display:flex;
-    max-width:1300px;
-    margin:auto;
-    padding:15px;
-    gap:20px;
-}
-.left{
-    flex:1;
-    min-width:320px;
-}
-.right{
-    width:420px;
-    display:flex;
-    flex-direction:column;
-    gap:15px;
-}
-.card{
-    background:#fff;
-    padding:15px;
-    border-radius:8px;
-    box-shadow:0 2px 8px rgba(0,0,0,.1);
-}
-label{display:block;margin-top:8px;}
-input{
-    width:100%;
-    padding:6px;
-    margin-top:3px;
-}
-.result{
-    margin-top:10px;
-    font-weight:bold;
-}
-.game-box{
-    position:relative;
-    cursor:pointer;
-}
-canvas{
-    background:#111;
-    border-radius:10px;
-    display:block;
-}
-.score{
-    position:absolute;
-    top:6px;
-    left:8px;
-    color:#fff;
-    font-weight:bold;
-}
-.overlay{
-    position:absolute;
-    inset:0;
-    background:rgba(0,0,0,.65);
-    color:#fff;
-    display:none;
-    align-items:center;
-    justify-content:center;
-    text-align:center;
-    font-size:22px;
-}
-.countdown{font-size:18px;margin-top:5px;}
+body{margin:0;font-family:Arial;background:#f4f4f4}
+.container{max-width:1300px;margin:auto;padding:15px;display:flex;gap:20px}
+.left{flex:1}
+.right{width:420px;display:flex;flex-direction:column;gap:15px}
+.card{background:#fff;padding:15px;border-radius:8px;box-shadow:0 2px 8px rgba(0,0,0,.1)}
+label{display:block;margin-top:8px}
+input{width:100%;padding:6px}
+.result{margin-top:8px;font-weight:bold}
+canvas{background:#111;border-radius:10px;display:block}
+.game-box{position:relative;cursor:pointer}
+.score{position:absolute;top:6px;left:8px;color:#fff;font-weight:bold}
+.overlay{position:absolute;inset:0;background:rgba(0,0,0,.7);color:#fff;display:none;align-items:center;justify-content:center;font-size:22px;text-align:center}
+.countdown{font-size:18px}
 </style>
 </head>
 <body>
@@ -81,48 +27,48 @@ canvas{
 <div class="left">
 
 <div class="card">
-<b>1. Compound Interest</b>
-<label>Initial (€)<input id="ci_i" type="number"></label>
-<label>Monthly (€)<input id="ci_m" type="number"></label>
-<label>Annual Return (%)<input id="ci_r" type="number"></label>
+<b>Compound Interest</b>
+<label>Initial<input id="ci_i" type="number"></label>
+<label>Monthly<input id="ci_m" type="number"></label>
+<label>Return %<input id="ci_r" type="number"></label>
 <label>Years<input id="ci_y" type="number"></label>
-<button onclick="calcCI()">Calculate</button>
+<button onclick="ci()">Calculate</button>
 <div class="result" id="ci_o"></div>
 </div>
 
 <div class="card">
-<b>2. Mortgage Calculator</b>
-<label>Loan (€)<input id="mo_l" type="number"></label>
-<label>Annual Rate (%)<input id="mo_r" type="number"></label>
+<b>Mortgage</b>
+<label>Loan<input id="mo_l" type="number"></label>
+<label>Rate %<input id="mo_r" type="number"></label>
 <label>Years<input id="mo_y" type="number"></label>
-<button onclick="calcMortgage()">Calculate</button>
+<button onclick="mo()">Calculate</button>
 <div class="result" id="mo_o"></div>
 </div>
 
 <div class="card">
-<b>3. Savings Goal</b>
-<label>Target (€)<input id="sg_t" type="number"></label>
-<label>Current (€)<input id="sg_c" type="number"></label>
-<label>Annual Return (%)<input id="sg_r" type="number"></label>
+<b>Savings Goal</b>
+<label>Target<input id="sg_t" type="number"></label>
+<label>Current<input id="sg_c" type="number"></label>
+<label>Return %<input id="sg_r" type="number"></label>
 <label>Years<input id="sg_y" type="number"></label>
-<button onclick="calcSavings()">Calculate</button>
+<button onclick="sg()">Calculate</button>
 <div class="result" id="sg_o"></div>
 </div>
 
 <div class="card">
-<b>4. Retirement Withdrawals</b>
-<label>Current Savings (€)<input id="rt_c" type="number"></label>
-<label>Monthly Contribution (€)<input id="rt_m" type="number"></label>
-<label>Annual Return (%)<input id="rt_r" type="number"></label>
-<label>Years to Save<input id="rt_y" type="number"></label>
-<label>Monthly Withdrawal (€)<input id="rt_w" type="number"></label>
+<b>Retirement Withdrawals</b>
+<label>Current<input id="rt_c" type="number"></label>
+<label>Monthly<input id="rt_m" type="number"></label>
+<label>Return %<input id="rt_r" type="number"></label>
+<label>Years<input id="rt_y" type="number"></label>
+<label>Monthly Withdrawal<input id="rt_w" type="number"></label>
 <div class="result" id="rt_o"></div>
 </div>
 
 <div class="card">
 <b>Market Opens In</b>
-<div>🇫🇮 Helsinki<div class="countdown" id="hel"></div></div>
-<div>🇺🇸 NYSE<div class="countdown" id="ny"></div></div>
+<div>🇫🇮 Helsinki <span id="hel" class="countdown"></span></div>
+<div>🇺🇸 NYSE <span id="ny" class="countdown"></span></div>
 </div>
 
 </div>
@@ -138,144 +84,97 @@ canvas{
 <div class="game-box" id="tetrisBox">
 <canvas id="tetris" width="400" height="400"></canvas>
 <div class="score" id="tetrisScore">Score: 0</div>
+<div class="overlay" id="tetrisOver">GAME OVER<br>Click to restart</div>
 </div>
 
 </div>
 </div>
 
 <script>
-// ================= CALCULATORS =================
-function calcCI(){
-    let i=+ci_i.value,m=+ci_m.value,r=+ci_r.value/100/12,y=+ci_y.value;
-    if(!i||!r||!y){ci_o.innerHTML="Fill required fields";return;}
-    let t=i;
-    for(let k=0;k<y*12;k++) t=t*(1+r)+m;
-    ci_o.innerHTML=`Final: €${t.toFixed(0)}`;
+// ===== CALCULATORS =====
+function ci(){let i=+ci_i.value,m=+ci_m.value,r=+ci_r.value/100/12,y=+ci_y.value;if(!i||!r||!y)return;let t=i;for(let k=0;k<y*12;k++)t=t*(1+r)+m;ci_o.textContent="Final: €"+t.toFixed(0)}
+function mo(){let p=+mo_l.value,r=+mo_r.value/100/12,n=+mo_y.value*12;if(!p||!r||!n)return;let pay=p*r/(1-Math.pow(1+r,-n));mo_o.textContent="Monthly: €"+pay.toFixed(2)}
+function sg(){let t=+sg_t.value,c=+sg_c.value||0,r=+sg_r.value/100/12,n=+sg_y.value*12;if(!t||!r||!n)return;let m=(t-c*Math.pow(1+r,n))*r/(Math.pow(1+r,n)-1);sg_o.textContent="Monthly: €"+m.toFixed(0)}
+function rt(){let c=+rt_c.value||0,m=+rt_m.value||0,r=+rt_r.value/100,y=+rt_y.value,w=+rt_w.value||0;if(!r)return;if(!w&&y){let cap=c;for(let i=0;i<y*12;i++)cap=cap*(1+r/12)+m;rt_w.value=((cap*r)/12).toFixed(2)}rt_o.textContent="Safe monthly withdrawal calculated"}
+["rt_c","rt_m","rt_r","rt_y","rt_w"].forEach(i=>window[i].addEventListener("input",rt))
+
+// ===== MARKET COUNTDOWN =====
+function nextOpen(h,m,o){let n=new Date(),u=n.getTime()+n.getTimezoneOffset()*60000,l=new Date(u+o*3600000);let d=new Date(l);d.setHours(h,m,0,0);if(l>=d)d.setDate(d.getDate()+1);if(d.getDay()==6)d.setDate(d.getDate()+2);if(d.getDay()==0)d.setDate(d.getDate()+1);return d-l}
+setInterval(()=>{hel.textContent=new Date(nextOpen(10,0,2)).toISOString().substr(11,8);ny.textContent=new Date(nextOpen(9,30,-5)).toISOString().substr(11,8)},1000)
+
+// ===== SNAKE =====
+const sc=snake.getContext("2d"),S=20;let s=[],dir,coin,alive=false,sa=false,coins=0;
+snakeBox.onclick=()=>{s=[{x:200,y:200}];dir={x:S,y:0};coin={x:Math.floor(Math.random()*20)*S,y:Math.floor(Math.random()*20)*S};coins=0;snakeScore.textContent="Coins: 0";snakeOver.style.display="none";alive=true;sa=true}
+setInterval(()=>{if(!alive||!sa)return;let h={x:s[0].x+dir.x,y:s[0].y+dir.y};if(h.x<0||h.y<0||h.x>=400||h.y>=400)return end();if(s.some(p=>p.x==h.x&&p.y==h.y))return end();s.unshift(h);if(h.x==coin.x&&h.y==coin.y){coins++;snakeScore.textContent="Coins: "+coins;coin={x:Math.floor(Math.random()*20)*S,y:Math.floor(Math.random()*20)*S}}else s.pop();draw()},150);
+function draw(){sc.fillStyle="#111";sc.fillRect(0,0,400,400);sc.fillStyle="gold";sc.beginPath();sc.arc(coin.x+10,coin.y+10,8,0,Math.PI*2);sc.fill();sc.fillStyle="#00ff99";s.forEach(p=>sc.fillRect(p.x+2,p.y+2,16,16))}
+function end(){alive=false;snakeOver.style.display="flex"}
+
+// ===== TETRIS (FIXED) =====
+const tc=tetris.getContext("2d"),TS=40,COL=10,ROW=10;
+let grid=Array.from({length:ROW},()=>Array(COL).fill(0)),piece=null,ta=false,score=0;
+const shapes=[[[1,1,1,1]],[[1,1],[1,1]],[[0,1,0],[1,1,1]]];
+
+function spawn(){
+    piece={x:3,y:0,s:shapes[Math.floor(Math.random()*shapes.length)]}
+    if(hit(piece.x,piece.y,piece.s)) gameOver()
 }
-function calcMortgage(){
-    let p=+mo_l.value,r=+mo_r.value/100/12,n=+mo_y.value*12;
-    if(!p||!r||!n){mo_o.innerHTML="Fill required fields";return;}
-    let pay=p*r/(1-Math.pow(1+r,-n));
-    mo_o.innerHTML=`Monthly: €${pay.toFixed(2)}`;
+function hit(px,py,ps){return ps.some((r,y)=>r.some((c,x)=>c&&(px+x<0||px+x>=COL||py+y>=ROW||grid[py+y][px+x])))}
+function drawT(){
+    tc.fillStyle="#111";tc.fillRect(0,0,400,400)
+    tc.fillStyle="cyan"
+    grid.forEach((r,y)=>r.forEach((c,x)=>c&&tc.fillRect(x*TS,y*TS,TS,TS)))
+    if(piece)piece.s.forEach((r,y)=>r.forEach((c,x)=>c&&tc.fillRect((piece.x+x)*TS,(piece.y+y)*TS,TS,TS)))
 }
-function calcSavings(){
-    let t=+sg_t.value,c=+sg_c.value||0,r=+sg_r.value/100/12,n=+sg_y.value*12;
-    if(!t||!r||!n){sg_o.innerHTML="Fill required fields";return;}
-    let m=(t-c*Math.pow(1+r,n))*r/(Math.pow(1+r,n)-1);
-    sg_o.innerHTML=`Monthly needed: €${m.toFixed(0)}`;
-}
-function updateRet(){
-    let c=+rt_c.value||0,m=+rt_m.value||0,r=+rt_r.value/100,y=+rt_y.value,w=+rt_w.value||0;
-    if(!r){rt_o.innerHTML="Enter return rate";return;}
-    if(!w && y){
-        let cap=c;
-        for(let i=0;i<y*12;i++) cap=cap*(1+r/12)+m;
-        w=(cap*r)/12; rt_w.value=w.toFixed(2);
-    }
-    if(!y && w){
-        let cap=c,months=0;
-        while((cap*r)/12<w && months<1200){
-            cap=cap*(1+r/12)+m; months++;
+function clearLines(){
+    for(let y=ROW-1;y>=0;y--){
+        if(grid[y].every(c=>c)){
+            grid.splice(y,1)
+            grid.unshift(Array(COL).fill(0))
+            score+=100
+            tetrisScore.textContent="Score: "+score
+            y++
         }
-        rt_y.value=(months/12).toFixed(1);
     }
-    rt_o.innerHTML=`Safe withdrawal ≈ €${w.toFixed(2)}`;
-}
-["rt_c","rt_m","rt_r","rt_y","rt_w"].forEach(id=>window[id].addEventListener("input",updateRet));
-
-// ================= MARKET COUNTDOWN =================
-function nextOpen(h,m,off){
-    let n=new Date(),u=n.getTime()+n.getTimezoneOffset()*60000,l=new Date(u+off*3600000);
-    let o=new Date(l); o.setHours(h,m,0,0);
-    if(l.getDay()==6)o.setDate(o.getDate()+2);
-    if(l.getDay()==0)o.setDate(o.getDate()+1);
-    if(l>=o)o.setDate(o.getDate()+1);
-    return o-l;
-}
-setInterval(()=>{
-    hel.textContent=new Date(nextOpen(10,0,2)).toISOString().substr(11,8);
-    ny.textContent=new Date(nextOpen(9,30,-5)).toISOString().substr(11,8);
-},1000);
-
-// ================= SNAKE =================
-const sc=snake.getContext("2d"), S=20;
-let s=[],dir,coin,alive=false,snakeActive=false,coins=0;
-function startSnake(){
-    s=[{x:200,y:200}];dir={x:S,y:0};
-    coin={x:Math.floor(Math.random()*20)*S,y:Math.floor(Math.random()*20)*S};
-    coins=0;snakeScore.textContent="Coins: 0";
-    snakeOver.style.display="none";alive=true;snakeActive=true;
-}
-function drawSnake(){
-    sc.fillStyle="#111";sc.fillRect(0,0,400,400);
-    sc.fillStyle="gold";sc.beginPath();sc.arc(coin.x+10,coin.y+10,8,0,Math.PI*2);sc.fill();
-    sc.fillStyle="#00ff99";s.forEach(p=>sc.fillRect(p.x+2,p.y+2,16,16));
-}
-function loopSnake(){
-    if(!alive||!snakeActive)return;
-    let h={x:s[0].x+dir.x,y:s[0].y+dir.y};
-    if(h.x<0||h.y<0||h.x>=400||h.y>=400)return endSnake();
-    if(s.some(p=>p.x==h.x&&p.y==h.y))return endSnake();
-    s.unshift(h);
-    if(h.x==coin.x&&h.y==coin.y){
-        coins++;snakeScore.textContent="Coins: "+coins;
-        coin={x:Math.floor(Math.random()*20)*S,y:Math.floor(Math.random()*20)*S};
-    }else s.pop();
-    drawSnake();
-}
-function endSnake(){alive=false;snakeOver.style.display="flex";}
-setInterval(loopSnake,150);
-snakeBox.onclick=startSnake;
-
-// ================= TETRIS (FIXED CONTROLS) =================
-const tc=tetris.getContext("2d"), COL=10, ROW=20, TS=20;
-let grid=Array.from({length:ROW},()=>Array(COL).fill(0));
-let piece=null,tActive=false,score=0;
-const shapes=[
-[[1,1,1,1]],
-[[1,1],[1,1]],
-[[0,1,0],[1,1,1]]
-];
-function newPiece(){
-    let s=shapes[Math.floor(Math.random()*shapes.length)];
-    piece={x:4,y:0,s:s};
-}
-function drawTetris(){
-    tc.fillStyle="#111";tc.fillRect(0,0,400,400);
-    tc.fillStyle="cyan";
-    grid.forEach((r,y)=>r.forEach((c,x)=>{if(c)tc.fillRect(x*TS,y*TS,TS,TS);}));
-    if(piece)piece.s.forEach((r,y)=>r.forEach((c,x)=>{if(c)tc.fillRect((piece.x+x)*TS,(piece.y+y)*TS,TS,TS);}));
-}
-function collide(px,py,ps){
-    return ps.some((r,y)=>r.some((c,x)=>c&&(px+x<0||px+x>=COL||py+y>=ROW||grid[py+y][px+x])));
 }
 function drop(){
-    if(!tActive||!piece)return;
-    piece.y++;
-    if(collide(piece.x,piece.y,piece.s)){
-        piece.y--;
-        piece.s.forEach((r,y)=>r.forEach((c,x)=>{if(c)grid[piece.y+y][piece.x+x]=1;}));
-        newPiece();
+    if(!ta||!piece)return
+    piece.y++
+    if(hit(piece.x,piece.y,piece.s)){
+        piece.y--
+        piece.s.forEach((r,y)=>r.forEach((c,x)=>c&&(grid[piece.y+y][piece.x+x]=1)))
+        clearLines()
+        spawn()
     }
-    drawTetris();
+    drawT()
 }
 function rotate(){
-    let r=piece.s[0].map((_,i)=>piece.s.map(row=>row[i]).reverse());
-    if(!collide(piece.x,piece.y,r))piece.s=r;
+    let r=piece.s[0].map((_,i)=>piece.s.map(row=>row[i]).reverse())
+    if(!hit(piece.x,piece.y,r))piece.s=r
 }
-setInterval(drop,800);
-tetrisBox.onclick=()=>{tActive=true;if(!piece)newPiece();};
+function gameOver(){
+    ta=false
+    tetrisOver.style.display="flex"
+}
+tetrisBox.onclick=()=>{grid=Array.from({length:ROW},()=>Array(COL).fill(0));score=0;tetrisScore.textContent="Score: 0";tetrisOver.style.display="none";ta=true;spawn()}
+setInterval(drop,800)
+
 document.addEventListener("keydown",e=>{
-    if(!(snakeActive||tActive))return;
-    if(["ArrowUp","ArrowDown","ArrowLeft","ArrowRight"].includes(e.key))e.preventDefault();
-    if(tActive&&piece){
-        if(e.key=="ArrowLeft"&&!collide(piece.x-1,piece.y,piece.s))piece.x--;
-        if(e.key=="ArrowRight"&&!collide(piece.x+1,piece.y,piece.s))piece.x++;
-        if(e.key=="ArrowDown")drop();
-        if(e.key=="ArrowUp")rotate();
-        drawTetris();
+    if(!(sa||ta))return
+    if(["ArrowUp","ArrowDown","ArrowLeft","ArrowRight"].includes(e.key))e.preventDefault()
+    if(ta&&piece){
+        if(e.key=="ArrowLeft"&&!hit(piece.x-1,piece.y,piece.s))piece.x--
+        if(e.key=="ArrowRight"&&!hit(piece.x+1,piece.y,piece.s))piece.x++
+        if(e.key=="ArrowDown")drop()
+        if(e.key=="ArrowUp")rotate()
+        drawT()
     }
-});
+    if(sa){
+        if(e.key=="ArrowUp"&&dir.y==0)dir={x:0,y:-S}
+        if(e.key=="ArrowDown"&&dir.y==0)dir={x:0,y:S}
+        if(e.key=="ArrowLeft"&&dir.x==0)dir={x:-S,y:0}
+        if(e.key=="ArrowRight"&&dir.x==0)dir={x:S,y:0}
+    }
+})
 </script>
 </body>
 </html>
