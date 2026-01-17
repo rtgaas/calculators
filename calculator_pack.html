@@ -7,14 +7,8 @@
 <meta name="keywords" content="finance calculator, compound interest, mortgage, savings goal, retirement, snake game, online game">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <style>
-body {
-    font-family: Arial, sans-serif;
-    margin:0; padding:0;
-}
-.navbar {
-    position: fixed; top:0; left:0; width:100%; background:#2c3e50; color:white;
-    display:flex; justify-content:space-around; padding:10px 0; z-index:1000; flex-wrap:wrap;
-}
+body { font-family: Arial, sans-serif; margin:0; padding:0; }
+.navbar { position: fixed; top:0; left:0; width:100%; background:#2c3e50; color:white; display:flex; justify-content:space-around; padding:10px 0; z-index:1000; flex-wrap:wrap; }
 .navbar a { color:white; text-decoration:none; padding:5px 10px; }
 .navbar a:hover { background:#3498db; border-radius:4px; }
 .container { display:flex; flex-wrap:wrap; margin-top:80px; max-width:1200px; gap:20px; padding:0 10px; justify-content:center; }
@@ -27,22 +21,13 @@ input{width:100%;padding:5px;margin-top:2px;box-sizing:border-box;}
 button{margin-top:10px;padding:8px;width:100%;border:none;border-radius:4px;background:#3498db;color:white;cursor:pointer;}
 button:hover{background:#2980b9;}
 .result{margin-top:10px;background:#f1f1f1;padding:10px;border-radius:5px;font-weight:bold;}
-
-/* Snake */
-.snake-container {
-    width:400px; height:400px; background:#000; position:relative; border:2px solid #2c3e50;
-    display:flex; justify-content:center; align-items:center; color:white; font-weight:bold; font-size:24px; cursor:pointer;
-    flex-shrink:0;
-}
+.snake-container { width:400px; height:400px; background:#000; position:relative; border:2px solid #2c3e50; display:flex; justify-content:center; align-items:center; color:white; font-weight:bold; font-size:24px; cursor:pointer; flex-shrink:0; }
 .snake-canvas { width:100%; height:100%; display:block; background:#000; }
-
-/* Responsive */
 @media(max-width:1000px){.container{flex-direction:column;align-items:center;}}
 </style>
 </head>
 <body>
 
-<!-- Navigation -->
 <div class="navbar">
     <a href="#compound">Compound Interest</a>
     <a href="#mortgage">Mortgage</a>
@@ -87,14 +72,13 @@ button:hover{background:#2980b9;}
 <div class="result" id="goal_output"></div>
 </section>
 
-<!-- 4. Dynamic Retirement -->
+<!-- 4. Retirement Withdrawals -->
 <section id="retirement">
-<h2>4. Retirement Withdrawals Calculator (Dynamic)</h2>
+<h2>4. Retirement Withdrawals Calculator (Safe Withdrawals)</h2>
 <label>Current Savings (€)<input type="number" id="ret_current" placeholder="0"></label>
-<label>Monthly Contribution (€)<input type="number" id="ret_monthly" placeholder="Leave blank to auto-calc"></label>
+<label>Monthly Contribution (€)<input type="number" id="ret_monthly" placeholder="0"></label>
 <label>Annual Return Rate (%)<input type="number" id="ret_rate" placeholder="7"></label>
 <label>Years to Save<input type="number" id="ret_years" placeholder="30"></label>
-<label>Desired Monthly Withdrawal (€)<input type="number" id="ret_desired" placeholder="Leave blank to auto-calc"></label>
 <label>Tax Rate on Withdrawals (%)<input type="number" id="ret_tax" placeholder="25"></label>
 <div class="result" id="ret_output"></div>
 </section>
@@ -102,8 +86,8 @@ button:hover{background:#2980b9;}
 
 <!-- Snake Game -->
 <div class="snake-container" id="snake-container">
-<canvas id="snake" class="snake-canvas"></canvas>
-<div id="game-over" style="position:absolute;display:none;flex-direction:column;align-items:center;justify-content:center;text-align:center;">GAME OVER!<br>Click to restart</div>
+<canvas id="snake" width="400" height="400"></canvas>
+<div id="game-over" style="position:absolute;display:none;flex-direction:column;align-items:center;justify-content:center;text-align:center;color:white;font-size:24px;">GAME OVER!<br>Click to restart</div>
 </div>
 </div>
 
@@ -137,77 +121,77 @@ function calculateGoal(){
     document.getElementById("goal_output").innerHTML="Required Monthly Savings: €"+pmnt.toFixed(0);
 }
 
-// ---- Dynamic Retirement ----
+// ---- Retirement Withdrawals ----
 function updateRetirement(){
     let curr=+document.getElementById("ret_current").value||0;
-    let monthly=+document.getElementById("ret_monthly").value;
+    let monthly=+document.getElementById("ret_monthly").value||0;
     let rate=+document.getElementById("ret_rate").value/100;
     let years=+document.getElementById("ret_years").value;
-    let desired=+document.getElementById("ret_desired").value;
     let tax=+document.getElementById("ret_tax").value/100;
     if(!rate||!years||tax===undefined) return;
     let months=years*12;
     let mRate=rate/12;
-    function fv(P,PMT){let t=P; for(let i=0;i<months;i++) t=t*(1+mRate)+PMT; return t;}
-    let output="";
-    if(!monthly&&desired){
-        let targetFV=(desired*12)/(1-tax)/rate;
-        let low=0, high=1000000, guess=0;
-        for(let i=0;i<50;i++){guess=(low+high)/2; let f=fv(curr,guess); f>targetFV?high=guess:low=guess;}
-        output=`Required Monthly Contribution: €${guess.toFixed(2)}`;
-    } else if(monthly&&!desired){
-        let f=fv(curr,monthly);
-        let monthlyAvailable=f*rate*(1-tax)/12;
-        output=`Achievable Monthly Withdrawal: €${monthlyAvailable.toFixed(2)}`;
-    } else if(monthly&&desired){
-        let f=fv(curr,monthly);
-        let mAvail=f*rate*(1-tax)/12;
-        output=`Future Savings: €${f.toFixed(0)}<br>Monthly Withdrawable: €${mAvail.toFixed(2)}<br>`+
-               (mAvail>=desired?"✅ Desired withdrawal achievable":"⚠ Desired withdrawal NOT achievable");
-    } else output="Fill at least desired withdrawal or monthly contribution.";
-    document.getElementById("ret_output").innerHTML=output;
+    let future=curr;
+    for(let i=0;i<months;i++) future=future*(1+mRate)+monthly;
+    let annualReturn=future*rate*(1-tax);
+    let monthlyWithdrawable=annualReturn/12;
+    document.getElementById("ret_output").innerHTML=
+        `Future Capital at Retirement: €${future.toFixed(0)}<br>`+
+        `Maximum Safe Monthly Withdrawal (without reducing capital): €${monthlyWithdrawable.toFixed(2)}`;
 }
-["ret_current","ret_monthly","ret_rate","ret_years","ret_desired","ret_tax"].forEach(id=>{
-    document.getElementById(id).addEventListener("input",updateRetirement);
+["ret_current","ret_monthly","ret_rate","ret_years","ret_tax"].forEach(id=>{
+    document.getElementById(id).addEventListener("input", updateRetirement);
 });
 
 // ---- Snake Game ----
 const canvas=document.getElementById("snake");
 const ctx=canvas.getContext("2d");
-canvas.width=400; canvas.height=400;
 const scale=20; const rows=canvas.height/scale; const cols=canvas.width/scale;
 let snake, coin, direction, gameInterval, gameOver=false;
 
-function initGame(){
-    snake=[{x:5*scale,y:5*scale}]; direction={x:scale,y:0};
-    placeCoin(); gameOver=false;
+function initSnake(){
+    snake=[{x:5*scale,y:5*scale}];
+    direction={x:scale,y:0};
+    placeCoin();
+    gameOver=false;
     document.getElementById("game-over").style.display="none";
     if(gameInterval) clearInterval(gameInterval);
-    gameInterval=setInterval(updateGame,150);
+    gameInterval=setInterval(gameLoop,150);
 }
 
-function placeCoin(){coin={x:Math.floor(Math.random()*cols)*scale,y:Math.floor(Math.random()*rows)*scale};}
+function placeCoin(){coin={x:Math.floor(Math.random()*cols)*scale, y:Math.floor(Math.random()*rows)*scale};}
 
-function updateGame(){
+function gameLoop(){
     if(gameOver) return;
     const head={x:snake[0].x+direction.x, y:snake[0].y+direction.y};
     if(head.x<0||head.x>=canvas.width||head.y<0||head.y>=canvas.height) return endGame();
     for(let part of snake) if(part.x===head.x && part.y===head.y) return endGame();
     snake.unshift(head);
-    if(head.x===coin.x && head.y===coin.y) placeCoin(); else snake.pop();
-    drawGame();
+    if(head.x===coin.x && head.y===coin.y){ placeCoin(); } else { snake.pop(); }
+    drawSnake();
 }
 
-function drawGame(){
+function drawSnake(){
     ctx.fillStyle="#000"; ctx.fillRect(0,0,canvas.width,canvas.height);
     ctx.fillStyle="gold"; ctx.fillRect(coin.x,coin.y,scale,scale);
     ctx.fillStyle="lime"; snake.forEach(p=>ctx.fillRect(p.x,p.y,scale,scale));
 }
 
-function endGame(){gameOver=true; document.getElementById("game-over").style.display="flex";}
+function endGame(){gameOver=true; document.getElementById("game-over").style.display="flex"; }
 
-document.getElementById("snake-container").addEventListener("click",()=>{ if(gameOver)initGame(); });
-document.addEventListener("keydown",(e)=>{ if(!gameOver)switch(e.key){case"ArrowUp":if(direction.y===0)direction={x:0,y:-scale};break;case"ArrowDown":if(direction.y===0)direction={x:0,y:scale};break;case"ArrowLeft":if(direction.x===0)direction={x:-scale,y:0};break;case"ArrowRight":if(direction.x===0)direction={x:scale,y:0};break;}});
+document.addEventListener("keydown",(e)=>{
+    if(gameOver) return;
+    switch(e.key){
+        case"ArrowUp": if(direction.y===0) direction={x:0,y:-scale}; break;
+        case"ArrowDown": if(direction.y===0) direction={x:0,y:scale}; break;
+        case"ArrowLeft": if(direction.x===0) direction={x:-scale,y:0}; break;
+        case"ArrowRight": if(direction.x===0) direction={x:scale,y:0}; break;
+    }
+});
+document.getElementById("snake-container").addEventListener("click",()=>{ initSnake(); });
+
+// start snake on load
+initSnake();
 </script>
 </body>
 </html>
