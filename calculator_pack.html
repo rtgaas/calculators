@@ -2,9 +2,9 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Simple Calculator Pack: Compound Interest, Mortgage & Savings Goal</title>
-<meta name="description" content="Use our free Simple Calculator Pack to calculate compound interest, mortgage payments, and savings goals. Plan your finances easily online.">
-<meta name="keywords" content="compound interest calculator, mortgage calculator, savings goal calculator, financial calculator, online calculator, personal finance tools">
+<title>Ultimate Finance Calculator Pack: Compound Interest, Mortgage, Savings Goal & Retirement</title>
+<meta name="description" content="Free Ultimate Finance Calculator Pack: calculate compound interest, mortgage payments, savings goals, and retirement withdrawals. Plan your finances online.">
+<meta name="keywords" content="compound interest calculator, mortgage calculator, savings goal calculator, retirement calculator, financial calculator, online finance tools">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <style>
 body {
@@ -60,10 +60,10 @@ button:hover {
 </head>
 <body>
 
-<h1>Simple Calculator Pack</h1>
-<p>Welcome! This free calculator pack includes three essential financial tools: calculate your compound interest growth, determine mortgage payments, and plan your savings goals. Perfect for personal finance planning, budgeting, and investment calculations.</p>
+<h1>Ultimate Finance Calculator Pack</h1>
+<p>Welcome! This pack includes four essential financial calculators: calculate compound interest growth, mortgage payments, savings goals, and retirement withdrawals. Perfect for personal finance planning, budgeting, and investment calculations.</p>
 
-<!-- Compound Interest Calculator -->
+<!-- 1. Compound Interest -->
 <h2>1. Compound Interest Calculator</h2>
 <p>See how your investments grow over time with monthly contributions and compounding interest.</p>
 <label>Initial Investment (€)
@@ -81,7 +81,7 @@ button:hover {
 <button onclick="calculateCompound()">Calculate</button>
 <div class="result" id="ci_output"></div>
 
-<!-- Mortgage Loan Calculator -->
+<!-- 2. Mortgage Loan -->
 <h2>2. Mortgage Loan Payment Calculator</h2>
 <p>Calculate monthly mortgage payments, total paid, and interest.</p>
 <label>Loan Amount (€)
@@ -96,7 +96,7 @@ button:hover {
 <button onclick="calculateMortgage()">Calculate</button>
 <div class="result" id="mortgage_output"></div>
 
-<!-- Savings Goal Calculator -->
+<!-- 3. Savings Goal -->
 <h2>3. Savings Goal Calculator</h2>
 <p>Find out how much you need to save each month to reach your financial goal.</p>
 <label>Target Amount (€)
@@ -114,8 +114,32 @@ button:hover {
 <button onclick="calculateGoal()">Calculate</button>
 <div class="result" id="goal_output"></div>
 
+<!-- 4. Retirement Withdrawals -->
+<h2>4. Retirement Withdrawals Calculator</h2>
+<p>Calculate when you can retire and withdraw a desired monthly amount without reducing your savings.</p>
+<label>Current Savings (€)
+<input type="number" id="ret_current" value="100000">
+</label>
+<label>Monthly Contribution (€)
+<input type="number" id="ret_monthly" value="1000">
+</label>
+<label>Annual Return Rate (%) 
+<input type="number" id="ret_rate" value="7">
+</label>
+<label>Years to Save
+<input type="number" id="ret_years" value="30">
+</label>
+<label>Desired Monthly Withdrawal (€)
+<input type="number" id="ret_desired" value="2000">
+</label>
+<label>Tax Rate on Withdrawals (%)
+<input type="number" id="ret_tax" value="25">
+</label>
+<button onclick="calculateRetirement()">Calculate</button>
+<div class="result" id="ret_output"></div>
+
 <script>
-// ---------------- COMPOUND INTEREST ----------------
+// ----------- COMPOUND INTEREST -----------
 function calculateCompound() {
     let initial = Number(document.getElementById("ci_initial").value);
     let monthly = Number(document.getElementById("ci_monthly").value);
@@ -137,7 +161,7 @@ function calculateCompound() {
         "Total Gain: €" + gain.toFixed(0);
 }
 
-// ---------------- MORTGAGE ----------------
+// ----------- MORTGAGE -----------
 function calculateMortgage() {
     let principal = Number(document.getElementById("mortgage_amount").value);
     let annualRate = Number(document.getElementById("mortgage_rate").value) / 100;
@@ -153,7 +177,7 @@ function calculateMortgage() {
         "Total Interest: €" + ((payment * months) - principal).toFixed(2);
 }
 
-// ---------------- SAVINGS GOAL ----------------
+// ----------- SAVINGS GOAL -----------
 function calculateGoal() {
     let target = Number(document.getElementById("goal_amount").value);
     let current = Number(document.getElementById("goal_current").value);
@@ -168,6 +192,39 @@ function calculateGoal() {
 
     document.getElementById("goal_output").innerHTML =
         "Required Monthly Savings: €" + requiredMonthly.toFixed(0);
+}
+
+// ----------- RETIREMENT -----------
+function calculateRetirement() {
+    let current = Number(document.getElementById("ret_current").value);
+    let monthly = Number(document.getElementById("ret_monthly").value);
+    let annualRate = Number(document.getElementById("ret_rate").value) / 100;
+    let years = Number(document.getElementById("ret_years").value);
+    let desired = Number(document.getElementById("ret_desired").value);
+    let tax = Number(document.getElementById("ret_tax").value) / 100;
+
+    let months = years * 12;
+    let monthlyRate = annualRate / 12;
+
+    let fv = current;
+    for (let i = 0; i < months; i++) {
+        fv = fv * (1 + monthlyRate) + monthly;
+    }
+
+    let annualReturn = fv * annualRate;
+    let afterTaxReturn = annualReturn * (1 - tax);
+    let monthlyAvailable = afterTaxReturn / 12;
+
+    let message = "Future Savings at Retirement: €" + fv.toFixed(0) + "<br>" +
+                  "Monthly Withdrawable (after tax): €" + monthlyAvailable.toFixed(0) + "<br>";
+
+    if(monthlyAvailable >= desired){
+        message += "✅ You can retire and withdraw your desired amount.";
+    } else {
+        message += "⚠ You will not be able to withdraw the desired amount. Consider saving more or waiting longer.";
+    }
+
+    document.getElementById("ret_output").innerHTML = message;
 }
 </script>
 
