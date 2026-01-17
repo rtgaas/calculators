@@ -3,74 +3,41 @@
 <head>
 <meta charset="UTF-8">
 <title>Ultimate Finance Calculator Pack + Snake Game</title>
-<meta name="description" content="Free Ultimate Finance Calculator Pack with a fun Snake game. Calculate finances and play a classic game online.">
+<meta name="description" content="Finance calculator pack with Compound Interest, Mortgage, Savings Goal, Dynamic Retirement Calculator and classic Snake game with gold coins.">
 <meta name="keywords" content="finance calculator, compound interest, mortgage, savings goal, retirement, snake game, online game">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <style>
 body {
     font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    margin:0; padding:0;
 }
-
-/* Navigation */
 .navbar {
-    position: fixed;
-    top: 0;
-    width: 100%;
-    background: #2c3e50;
-    color: white;
-    display: flex;
-    justify-content: space-around;
-    padding: 10px 0;
-    z-index: 1000;
-    flex-wrap: wrap;
+    position: fixed; top:0; left:0; width:100%; background:#2c3e50; color:white;
+    display:flex; justify-content:space-around; padding:10px 0; z-index:1000; flex-wrap:wrap;
 }
-.navbar a {
-    color: white;
-    text-decoration: none;
-    padding: 5px 10px;
-}
-.navbar a:hover {
-    background-color: #3498db;
-    border-radius: 4px;
-}
+.navbar a { color:white; text-decoration:none; padding:5px 10px; }
+.navbar a:hover { background:#3498db; border-radius:4px; }
+.container { display:flex; flex-wrap:wrap; margin-top:80px; max-width:1200px; gap:20px; padding:0 10px; justify-content:center; }
+.calculators { flex:1; min-width:500px; }
+h1{text-align:center;margin-top:0;}
+h2{margin-top:30px;color:#2c3e50;}
+p{color:#555;}
+label{display:block;margin-top:10px;}
+input{width:100%;padding:5px;margin-top:2px;box-sizing:border-box;}
+button{margin-top:10px;padding:8px;width:100%;border:none;border-radius:4px;background:#3498db;color:white;cursor:pointer;}
+button:hover{background:#2980b9;}
+.result{margin-top:10px;background:#f1f1f1;padding:10px;border-radius:5px;font-weight:bold;}
 
-/* Main Content */
-.container {
-    display: flex;
-    flex-direction: row;
-    margin-top: 80px;
-    max-width: 1200px;
-    gap: 20px;
-    flex-wrap: wrap;
-}
-.calculators {
-    flex: 1;
-    min-width: 500px;
-}
-h1 { text-align: center; margin-top: 0; }
-h2 { margin-top: 30px; color: #2c3e50; }
-p { color: #555; }
-label { display: block; margin-top: 10px; }
-input { width: 100%; padding: 8px; margin-top: 4px; box-sizing: border-box; }
-button { margin-top: 15px; padding: 10px; width: 100%; font-size: 16px; background-color: #3498db; color: white; border: none; cursor: pointer; border-radius: 4px; }
-button:hover { background-color: #2980b9; }
-.result { margin-top: 20px; font-weight: bold; background: #f1f1f1; padding: 10px; border-radius: 5px; }
-
-/* Snake Game */
+/* Snake */
 .snake-container {
-    width: 400px;
-    height: 400px;
-    background-color: #000;
-    position: relative;
-    border: 2px solid #2c3e50;
-    flex-shrink: 0;
+    width:400px; height:400px; background:#000; position:relative; border:2px solid #2c3e50;
+    display:flex; justify-content:center; align-items:center; color:white; font-weight:bold; font-size:24px; cursor:pointer;
+    flex-shrink:0;
 }
-.snake-canvas { width: 100%; height: 100%; background-color: #000; display: block; }
+.snake-canvas { width:100%; height:100%; display:block; background:#000; }
+
+/* Responsive */
+@media(max-width:1000px){.container{flex-direction:column;align-items:center;}}
 </style>
 </head>
 <body>
@@ -84,14 +51,13 @@ button:hover { background-color: #2980b9; }
 </div>
 
 <h1>Ultimate Finance Calculator Pack + Snake Game</h1>
-<p>Calculate finances and have some fun with the classic Snake game!</p>
+<p>Calculate finances and play the classic Snake game!</p>
 
 <div class="container">
 <div class="calculators">
 <!-- 1. Compound Interest -->
 <section id="compound">
 <h2>1. Compound Interest Calculator</h2>
-<p>See how your investments grow over time with monthly contributions and compounding interest.</p>
 <label>Initial Investment (€)<input type="number" id="ci_initial" value="10000"></label>
 <label>Monthly Contribution (€)<input type="number" id="ci_monthly" value="500"></label>
 <label>Annual Return (%)<input type="number" id="ci_rate" value="7"></label>
@@ -100,13 +66,11 @@ button:hover { background-color: #2980b9; }
 <div class="result" id="ci_output"></div>
 </section>
 
-<!-- 2. Mortgage Loan -->
+<!-- 2. Mortgage -->
 <section id="mortgage">
-<h2>2. Mortgage Loan Payment Calculator</h2>
-<p>Calculate monthly mortgage payments, total paid, and interest.</p>
+<h2>2. Mortgage Loan Calculator</h2>
 <label>Loan Amount (€)<input type="number" id="mortgage_amount" value="200000"></label>
-<label>Annual Interest Rate (%)
-<input type="number" id="mortgage_rate" value="4"></label>
+<label>Annual Interest Rate (%)<input type="number" id="mortgage_rate" value="4"></label>
 <label>Loan Term (Years)<input type="number" id="mortgage_years" value="30"></label>
 <button onclick="calculateMortgage()">Calculate</button>
 <div class="result" id="mortgage_output"></div>
@@ -115,7 +79,6 @@ button:hover { background-color: #2980b9; }
 <!-- 3. Savings Goal -->
 <section id="savings">
 <h2>3. Savings Goal Calculator</h2>
-<p>Find out how much you need to save each month to reach your financial goal.</p>
 <label>Target Amount (€)<input type="number" id="goal_amount" value="50000"></label>
 <label>Current Savings (€)<input type="number" id="goal_current" value="5000"></label>
 <label>Annual Interest Rate (%)<input type="number" id="goal_rate" value="5"></label>
@@ -124,160 +87,127 @@ button:hover { background-color: #2980b9; }
 <div class="result" id="goal_output"></div>
 </section>
 
-<!-- 4. Retirement Withdrawals -->
+<!-- 4. Dynamic Retirement -->
 <section id="retirement">
-<h2>4. Retirement Withdrawals Calculator</h2>
-<p>Calculate when you can retire and withdraw a desired monthly amount without reducing your savings.</p>
-<label>Current Savings (€)<input type="number" id="ret_current" value="100000"></label>
-<label>Monthly Contribution (€)<input type="number" id="ret_monthly" value="1000"></label>
-<label>Annual Return Rate (%) <input type="number" id="ret_rate" value="7"></label>
-<label>Years to Save<input type="number" id="ret_years" value="30"></label>
-<label>Desired Monthly Withdrawal (€)<input type="number" id="ret_desired" value="2000"></label>
-<label>Tax Rate on Withdrawals (%)
-<input type="number" id="ret_tax" value="25"></label>
-<button onclick="calculateRetirement()">Calculate</button>
+<h2>4. Retirement Withdrawals Calculator (Dynamic)</h2>
+<label>Current Savings (€)<input type="number" id="ret_current" placeholder="0"></label>
+<label>Monthly Contribution (€)<input type="number" id="ret_monthly" placeholder="Leave blank to auto-calc"></label>
+<label>Annual Return Rate (%)<input type="number" id="ret_rate" placeholder="7"></label>
+<label>Years to Save<input type="number" id="ret_years" placeholder="30"></label>
+<label>Desired Monthly Withdrawal (€)<input type="number" id="ret_desired" placeholder="Leave blank to auto-calc"></label>
+<label>Tax Rate on Withdrawals (%)<input type="number" id="ret_tax" placeholder="25"></label>
 <div class="result" id="ret_output"></div>
 </section>
 </div>
 
 <!-- Snake Game -->
-<div class="snake-container">
+<div class="snake-container" id="snake-container">
 <canvas id="snake" class="snake-canvas"></canvas>
+<div id="game-over" style="position:absolute;display:none;flex-direction:column;align-items:center;justify-content:center;text-align:center;">GAME OVER!<br>Click to restart</div>
 </div>
 </div>
 
 <script>
-// ---------- FINANCE CALCULATORS ----------
-function calculateCompound() {
-    let initial = Number(document.getElementById("ci_initial").value);
-    let monthly = Number(document.getElementById("ci_monthly").value);
-    let rate = Number(document.getElementById("ci_rate").value) / 100 / 12;
-    let years = Number(document.getElementById("ci_years").value);
-    let months = years * 12;
+// ---- Compound Interest ----
+function calculateCompound(){
+    let initial = +document.getElementById("ci_initial").value;
+    let monthly = +document.getElementById("ci_monthly").value;
+    let rate = +document.getElementById("ci_rate").value/100/12;
+    let years = +document.getElementById("ci_years").value;
     let total = initial;
-    for (let i = 0; i < months; i++) total = total*(1+rate)+monthly;
-    let contributions = initial + monthly*months;
-    let gain = total - contributions;
-    document.getElementById("ci_output").innerHTML = "Final Value: €"+total.toFixed(0)+"<br>Total Contributions: €"+contributions.toFixed(0)+"<br>Total Gain: €"+gain.toFixed(0);
+    for(let i=0;i<years*12;i++) total=total*(1+rate)+monthly;
+    let contrib=initial+monthly*years*12;
+    document.getElementById("ci_output").innerHTML="Final Value: €"+total.toFixed(0)+"<br>Total Contributions: €"+contrib.toFixed(0)+"<br>Total Gain: €"+(total-contrib).toFixed(0);
+}
+// ---- Mortgage ----
+function calculateMortgage(){
+    let p=+document.getElementById("mortgage_amount").value;
+    let r=+document.getElementById("mortgage_rate").value/100/12;
+    let n=+document.getElementById("mortgage_years").value*12;
+    let pay=p*r/(1-Math.pow(1+r,-n));
+    document.getElementById("mortgage_output").innerHTML="Monthly: €"+pay.toFixed(2)+"<br>Total Paid: €"+(pay*n).toFixed(2)+"<br>Interest: €"+((pay*n)-p).toFixed(2);
+}
+// ---- Savings Goal ----
+function calculateGoal(){
+    let target=+document.getElementById("goal_amount").value;
+    let curr=+document.getElementById("goal_current").value;
+    let r=+document.getElementById("goal_rate").value/100/12;
+    let n=+document.getElementById("goal_years").value*12;
+    let pmnt=(target-curr*Math.pow(1+r,n))*(r/(Math.pow(1+r,n)-1));
+    document.getElementById("goal_output").innerHTML="Required Monthly Savings: €"+pmnt.toFixed(0);
 }
 
-function calculateMortgage() {
-    let principal = Number(document.getElementById("mortgage_amount").value);
-    let annualRate = Number(document.getElementById("mortgage_rate").value)/100;
-    let years = Number(document.getElementById("mortgage_years").value);
-    let monthlyRate = annualRate/12;
-    let months = years*12;
-    let payment = principal*monthlyRate/(1-Math.pow(1+monthlyRate,-months));
-    document.getElementById("mortgage_output").innerHTML = "Monthly Payment: €"+payment.toFixed(2)+"<br>Total Paid: €"+(payment*months).toFixed(2)+"<br>Total Interest: €"+((payment*months)-principal).toFixed(2);
+// ---- Dynamic Retirement ----
+function updateRetirement(){
+    let curr=+document.getElementById("ret_current").value||0;
+    let monthly=+document.getElementById("ret_monthly").value;
+    let rate=+document.getElementById("ret_rate").value/100;
+    let years=+document.getElementById("ret_years").value;
+    let desired=+document.getElementById("ret_desired").value;
+    let tax=+document.getElementById("ret_tax").value/100;
+    if(!rate||!years||tax===undefined) return;
+    let months=years*12;
+    let mRate=rate/12;
+    function fv(P,PMT){let t=P; for(let i=0;i<months;i++) t=t*(1+mRate)+PMT; return t;}
+    let output="";
+    if(!monthly&&desired){
+        let targetFV=(desired*12)/(1-tax)/rate;
+        let low=0, high=1000000, guess=0;
+        for(let i=0;i<50;i++){guess=(low+high)/2; let f=fv(curr,guess); f>targetFV?high=guess:low=guess;}
+        output=`Required Monthly Contribution: €${guess.toFixed(2)}`;
+    } else if(monthly&&!desired){
+        let f=fv(curr,monthly);
+        let monthlyAvailable=f*rate*(1-tax)/12;
+        output=`Achievable Monthly Withdrawal: €${monthlyAvailable.toFixed(2)}`;
+    } else if(monthly&&desired){
+        let f=fv(curr,monthly);
+        let mAvail=f*rate*(1-tax)/12;
+        output=`Future Savings: €${f.toFixed(0)}<br>Monthly Withdrawable: €${mAvail.toFixed(2)}<br>`+
+               (mAvail>=desired?"✅ Desired withdrawal achievable":"⚠ Desired withdrawal NOT achievable");
+    } else output="Fill at least desired withdrawal or monthly contribution.";
+    document.getElementById("ret_output").innerHTML=output;
 }
-
-function calculateGoal() {
-    let target = Number(document.getElementById("goal_amount").value);
-    let current = Number(document.getElementById("goal_current").value);
-    let annualRate = Number(document.getElementById("goal_rate").value)/100;
-    let years = Number(document.getElementById("goal_years").value);
-    let months = years*12;
-    let monthlyRate = annualRate/12;
-    let requiredMonthly = (target - current*Math.pow(1+monthlyRate,months))*(monthlyRate/(Math.pow(1+monthlyRate,months)-1));
-    document.getElementById("goal_output").innerHTML="Required Monthly Savings: €"+requiredMonthly.toFixed(0);
-}
-
-function calculateRetirement() {
-    let current = Number(document.getElementById("ret_current").value);
-    let monthly = Number(document.getElementById("ret_monthly").value);
-    let annualRate = Number(document.getElementById("ret_rate").value)/100;
-    let years = Number(document.getElementById("ret_years").value);
-    let desired = Number(document.getElementById("ret_desired").value);
-    let tax = Number(document.getElementById("ret_tax").value)/100;
-    let months = years*12;
-    let monthlyRate = annualRate/12;
-    let fv = current;
-    for(let i=0;i<months;i++) fv=fv*(1+monthlyRate)+monthly;
-    let annualReturn=fv*annualRate;
-    let afterTaxReturn=annualReturn*(1-tax);
-    let monthlyAvailable=afterTaxReturn/12;
-    let message="Future Savings at Retirement: €"+fv.toFixed(0)+"<br>Monthly Withdrawable (after tax): €"+monthlyAvailable.toFixed(0)+"<br>";
-    if(monthlyAvailable>=desired) message+="✅ You can retire and withdraw your desired amount.";
-    else message+="⚠ You will not be able to withdraw the desired amount. Consider saving more or waiting longer.";
-    document.getElementById("ret_output").innerHTML=message;
-}
-
-// ---------- SNAKE GAME ----------
-const canvas = document.getElementById("snake");
-const ctx = canvas.getContext("2d");
-const scale = 20;
-const rows = canvas.height/scale;
-const cols = canvas.width/scale;
-let snake;
-let fruit;
-let direction;
-let gameInterval;
-let active = false;
-
-class Snake{
-    constructor(){
-        this.body=[{x:10,y:10}];
-        this.xSpeed=scale;
-        this.ySpeed=0;
-    }
-    draw(){
-        ctx.fillStyle="lime";
-        this.body.forEach(part=>ctx.fillRect(part.x,part.y,scale,scale));
-    }
-    update(){
-        let head={x:this.body[0].x+this.xSpeed, y:this.body[0].y+this.ySpeed};
-        this.body.unshift(head);
-        if(head.x===fruit.x && head.y===fruit.y){
-            fruit.pickLocation();
-        } else this.body.pop();
-        // Wall collision
-        if(head.x<0 || head.x>=canvas.width || head.y<0 || head.y>=canvas.height) resetGame();
-        // Self collision
-        for(let i=1;i<this.body.length;i++){
-            if(head.x===this.body[i].x && head.y===this.body[i].y) resetGame();
-        }
-    }
-    changeDirection(dir){
-        switch(dir){
-            case "ArrowUp": if(this.ySpeed===0){this.xSpeed=0; this.ySpeed=-scale;} break;
-            case "ArrowDown": if(this.ySpeed===0){this.xSpeed=0; this.ySpeed=scale;} break;
-            case "ArrowLeft": if(this.xSpeed===0){this.xSpeed=-scale; this.ySpeed=0;} break;
-            case "ArrowRight": if(this.xSpeed===0){this.xSpeed=scale; this.ySpeed=0;} break;
-        }
-    }
-}
-
-class Fruit{
-    constructor(){ this.pickLocation(); }
-    pickLocation(){
-        this.x=Math.floor(Math.random()*cols)*scale;
-        this.y=Math.floor(Math.random()*rows)*scale;
-    }
-    draw(){
-        ctx.fillStyle="red";
-        ctx.fillRect(this.x,this.y,scale,scale);
-    }
-}
-
-function resetGame(){
-    snake = new Snake();
-    fruit = new Fruit();
-    direction = "";
-}
-
-function gameLoop(){
-    if(!active) return;
-    ctx.clearRect(0,0,canvas.width,canvas.height);
-    fruit.draw();
-    snake.update();
-    snake.draw();
-}
-
-canvas.addEventListener("click",(e)=>{ active=true; if(!snake) resetGame(); if(!gameInterval) gameInterval=setInterval(gameLoop,150); });
-document.addEventListener("keydown",(e)=>{ if(active) snake.changeDirection(e.key); });
-document.addEventListener("click",(e)=>{
-    if(!canvas.contains(e.target)) active=false;
+["ret_current","ret_monthly","ret_rate","ret_years","ret_desired","ret_tax"].forEach(id=>{
+    document.getElementById(id).addEventListener("input",updateRetirement);
 });
+
+// ---- Snake Game ----
+const canvas=document.getElementById("snake");
+const ctx=canvas.getContext("2d");
+canvas.width=400; canvas.height=400;
+const scale=20; const rows=canvas.height/scale; const cols=canvas.width/scale;
+let snake, coin, direction, gameInterval, gameOver=false;
+
+function initGame(){
+    snake=[{x:5*scale,y:5*scale}]; direction={x:scale,y:0};
+    placeCoin(); gameOver=false;
+    document.getElementById("game-over").style.display="none";
+    if(gameInterval) clearInterval(gameInterval);
+    gameInterval=setInterval(updateGame,150);
+}
+
+function placeCoin(){coin={x:Math.floor(Math.random()*cols)*scale,y:Math.floor(Math.random()*rows)*scale};}
+
+function updateGame(){
+    if(gameOver) return;
+    const head={x:snake[0].x+direction.x, y:snake[0].y+direction.y};
+    if(head.x<0||head.x>=canvas.width||head.y<0||head.y>=canvas.height) return endGame();
+    for(let part of snake) if(part.x===head.x && part.y===head.y) return endGame();
+    snake.unshift(head);
+    if(head.x===coin.x && head.y===coin.y) placeCoin(); else snake.pop();
+    drawGame();
+}
+
+function drawGame(){
+    ctx.fillStyle="#000"; ctx.fillRect(0,0,canvas.width,canvas.height);
+    ctx.fillStyle="gold"; ctx.fillRect(coin.x,coin.y,scale,scale);
+    ctx.fillStyle="lime"; snake.forEach(p=>ctx.fillRect(p.x,p.y,scale,scale));
+}
+
+function endGame(){gameOver=true; document.getElementById("game-over").style.display="flex";}
+
+document.getElementById("snake-container").addEventListener("click",()=>{ if(gameOver)initGame(); });
+document.addEventListener("keydown",(e)=>{ if(!gameOver)switch(e.key){case"ArrowUp":if(direction.y===0)direction={x:0,y:-scale};break;case"ArrowDown":if(direction.y===0)direction={x:0,y:scale};break;case"ArrowLeft":if(direction.x===0)direction={x:-scale,y:0};break;case"ArrowRight":if(direction.x===0)direction={x:scale,y:0};break;}});
 </script>
 </body>
 </html>
